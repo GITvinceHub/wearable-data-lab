@@ -1,0 +1,135 @@
+# Garmin fēnix 8 Pro — Capteurs, API Connect IQ et exploitation avancée des données
+
+Ce document unifie l’ensemble des informations relatives aux capteurs, API Connect IQ (CIQ) et capacités d’export (standard et custom) de la montre Garmin fēnix 8 Pro.
+
+Objectif :
+- fournir une vue complète des données accessibles
+- structurer leur utilisation (temps réel, historique, biomécanique)
+- expliquer comment dépasser les limites des exports standards (FIT, TCX, GPX)
+
+---
+
+## 1. Capteurs temps réel (haute fréquence)
+
+| Donnée | API | Fréquence | Permission |
+|-------|-----|----------|------------|
+| Accéléromètre XYZ | Sensor.registerSensorDataListener | jusqu’à 100 Hz | Sensor |
+| Gyroscope XYZ | idem | jusqu’à 100 Hz | Sensor |
+| Magnétomètre XYZ | idem | ~25 Hz | Sensor |
+| Fréquence cardiaque | Sensor.getInfo().heartRate | ~1 Hz | Sensor |
+| GPS (lat/lon/alt/spd/hdg/acc) | Position.enableLocationEvents | 1 Hz | Positioning |
+| Batterie | System.getSystemStats() | à la demande | — |
+| SpO2 | SensorHistory.getOxygenSaturationHistory | ponctuel / continu | SensorHistory |
+
+---
+
+## 2. Capteurs continus via Sensor.getInfo()
+
+| Donnée | Champ | Unité | Notes |
+|-------|------|------|------|
+| Pression | pressure | Pa | brute |
+| Altitude baro | altitude | m | stable court terme |
+| Température interne | temperature | °C | biais thermique |
+| Cadence | cadence | rpm | dépend activité |
+| Puissance | power | W | capteur requis |
+| Heading | heading | rad | compas |
+
+---
+
+## 3. Données lentes (ActivityMonitor)
+
+| Donnée | Champ | Fréquence |
+|-------|------|----------|
+| Respiration | respirationRate | ~1/min |
+| Stress | stressScore | ~3 min |
+| Body Battery | bodyBatteryLevel | ~30 min |
+| Steps / Distance | cumul | continu |
+| Minutes actives | cumul | journalier |
+
+---
+
+## 4. Données historiques (SensorHistory)
+
+| Donnée | API |
+|-------|-----|
+| Heart Rate | getHeartRateHistory |
+| HRV | getHeartRateVariabilityHistory |
+| Stress | getStressHistory |
+| Pression | getPressureHistory |
+| Température | getTemperatureHistory |
+| Altitude | getElevationHistory |
+
+---
+
+## 5. Biomécanique (Running Dynamics)
+
+Disponible uniquement en activité running native.
+
+- Stride length
+- Vertical oscillation
+- Ground contact time
+- Balance G/D
+- Vertical ratio
+- Running power
+
+---
+
+## 6. Capteurs externes (ANT+ / BLE)
+
+- Ceinture HR
+- Power meter
+- Capteur cadence/vitesse
+- Foot pod
+- Tempe
+- Running pod
+- Di2 / AXS
+- Moxy
+- Dexcom
+
+---
+
+## 7. Export de données brutes via application Connect IQ
+
+Créer une application permet :
+
+- capturer données brutes
+- augmenter fréquence
+- éviter perte d’information
+- construire pipeline custom
+
+### Exemple API
+
+Sensor.registerSensorDataListener(...)
+Sensor.getInfo()
+Position.enableLocationEvents(...)
+
+---
+
+## 8. Formats de sortie
+
+- CSV / JSON → contrôle total
+- FIT enrichi → compatibilité
+- Streaming → temps réel
+
+---
+
+## 9. Comparaison FIT vs App custom
+
+| Critère | FIT | App custom |
+|--------|-----|-----------|
+| Fréquence | limitée | élevée |
+| IMU | ❌ | ✔️ |
+| Données brutes | ❌ | ✔️ |
+| Contrôle | faible | total |
+
+---
+
+## Conclusion
+
+La Garmin fēnix 8 Pro est une plateforme avancée permettant :
+
+- acquisition haute fréquence
+- export custom
+- analyse avancée
+
+➡️ exploitation maximale via application Connect IQ personnalisée
