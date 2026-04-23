@@ -1,7 +1,7 @@
 # Comparaison FIT  
 ## Garmin vs WorkoutDoors (Apple)
 
-Ce document compare les fichiers **FIT** générés par des appareils :contentReference[oaicite:0]{index=0} et par l’application :contentReference[oaicite:1]{index=1} sur Apple Watch.
+Ce document compare les fichiers **FIT** générés par des appareils Garmin et par l’application  WorkoutDoors sur Apple Watch.
 
 L’objectif est d’identifier les différences de **structure**, de **champs**, et de **richesse des données**.
 
